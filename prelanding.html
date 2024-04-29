@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<style>
+.logo-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.logo{
+  width: 35%;
+}
+.machine-text{
+  color: #1d1d1b;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: justify;
+  white-space: pre; /* Preserve spaces and line breaks */
+}
+.stay-tuned{
+  font-weight: 400;
+  text-decoration: underline;
+  letter-spacing: -0.5px;
+  font-size: 11px;
+
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 2s ease-in-out;
+}
+.stay-tuned.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  border-bottom: 2px solid #1d1d1b; /* Add underscore */
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: #1d1d1b; }
+}
+body{
+  margin: 0;
+  background-color: #fcf5e6;
+}
+
+@media only screen and (max-width: 600px){
+  .logo{
+    width: 130%;
+  }
+}
+</style>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prelanding Moveera</title>
+</head>
+<body>
+  <div class="logo-container" style="padding-bottom: 5rem;">
+    <video class="logo" autoplay muted>
+      <source src="resources/Moveera_VIDEO_mp4.mp4" type="video/mp4">
+    </video>
+    <p class="machine-text">We're building</p>
+    <p class="machine-text stay-tuned">STAY TUNED, KEEP WORKING →</p>
+  </div>
+</body>
+</html>
+
+<script>
+  window.onload = function() {
+    var video = document.querySelector('.logo');
+    var text = document.querySelector('.machine-text').textContent;
+    var stayTuned = document.querySelector('.stay-tuned');
+    document.querySelector('.machine-text').textContent = '';
+    var i = 0;
+
+    function typeWriter() {
+      return new Promise(function(resolve) {
+        function type() {
+          if (i < text.length) {
+            document.querySelector('.machine-text').textContent += text.charAt(i);
+            i++;
+            setTimeout(type, 100); // Adjust speed here
+          } else {
+            document.querySelector('.machine-text').innerHTML += '<span class="cursor"></span>';
+            resolve();
+          }
+        }
+        type();
+      });
+    }
+
+    video.onended = function() {
+      typeWriter().then(function() {
+        // Add a delay before showing the "stay tuned" message
+        setTimeout(function() {
+          stayTuned.classList.add('show');
+        }, 500); // Adjust delay here
+      });
+    }
+  }
+</script>
