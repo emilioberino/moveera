@@ -47,12 +47,15 @@
 }
 body{
   margin: 0;
-  background-color: #fcf5e6;
+  background-color: #eeeeee;
 }
-
+.logo-container > img{
+  width: 450px;
+}
 @media only screen and (max-width: 600px){
-  .logo{
-    width: 140%;
+  .logo-container > img {
+    width: 100%;
+  
   }
 }
 </style>
@@ -63,10 +66,8 @@ body{
   <title>Prelanding Moveera</title>
 </head>
 <body>
-  <div class="logo-container" style="padding-bottom: 5rem;">
-    <video class="logo" autoplay muted playsinline>
-      <source src="/resources/Moveera_VIDEO_mp4.mp4" type="video/mp4">
-    </video>
+  <div class="logo-container">
+    <img src="resources/Moveera-GIF-Loop-1.gif">
     <p class="machine-text">We're building</p>
     <p class="machine-text stay-tuned">STAY TUNED, KEEP WORKING →</p>
   </div>
@@ -75,7 +76,7 @@ body{
 
 <script>
   window.onload = function() {
-    var video = document.querySelector('.logo');
+    var img = document.querySelector('img');
     var text = document.querySelector('.machine-text').textContent;
     var stayTuned = document.querySelector('.stay-tuned');
     document.querySelector('.machine-text').textContent = '';
@@ -97,13 +98,14 @@ body{
       });
     }
 
-    video.onended = function() {
+    // Estimate the duration of the GIF and use setTimeout
+    setTimeout(function() {
       typeWriter().then(function() {
         // Add a delay before showing the "stay tuned" message
         setTimeout(function() {
           stayTuned.classList.add('show');
         }, 500); // Adjust delay here
       });
-    }
+    }, 5000); // Adjust GIF duration here
   }
 </script>
